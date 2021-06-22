@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
-import 'package:hardware_statistics_flutterapp/device_controller.dart';
-
-class Computer with ChangeNotifier {
+class Computer {
   String _name;
   double _cpuUsage, _cpuTemp, _gpuUsage, _gpuTemp, _ramUsage = 0;
 
@@ -12,40 +9,32 @@ class Computer with ChangeNotifier {
 
   set ramUsage(value) {
     _ramUsage = value;
-    notifyListeners();
   }
 
   get gpuTemp => _gpuTemp;
 
   set gpuTemp(value) {
     _gpuTemp = value;
-    notifyListeners();
   }
 
   get gpuUsage => _gpuUsage;
 
   set gpuUsage(value) {
     _gpuUsage = value;
-    notifyListeners();
   }
 
   get cpuTemp => _cpuTemp;
 
   set cpuTemp(value) {
     _cpuTemp = value;
-    notifyListeners();
   }
 
   double get cpuUsage => _cpuUsage;
 
   set cpuUsage(double value) {
     _cpuUsage = value;
-    notifyListeners();
   }
 
+  // ignore: unnecessary_getters_setters
   String get name => _name;
-
-  set name(String value) {
-    _name = value;
-  }
 }
