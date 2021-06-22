@@ -5,26 +5,25 @@ import 'package:mqtt_client/mqtt_server_client.dart';
 
 class MqttController {
   final client =
-      MqttServerClient('broker.mqttdashboard.com', 'FwUwjvc0Rn');
+      MqttServerClient('exilehub.net', 'FwUwjvc0Rn');
 
   Future<int> initializeMqttClient() async {
-    client.port = 8000;
+    client.port = 1883;
     client.logging(on: true);
     client.keepAlivePeriod = 5;
     client.autoReconnect = true;
     client.resubscribeOnAutoReconnect = false;
-    client.onAutoReconnect = onAutoReconnect;
-    client.onAutoReconnected = onAutoReconnected;
     client.onConnected = onConnected;
     client.onSubscribed = onSubscribed;
     client.pongCallback = pong;
+    client.useWebSocket=false;
 
     /* final connMess = MqttConnectMessage()
       .withClientIdentifier('Mqtt_MyClientUniqueId')
       .withWillTopic('willtopic') // If you set this you must set a will message
       .withWillMessage('My Will message')
       .startClean() // Non persistent session for testing
-      .withWillQos(MqttQos.atLeastOnce);
+      .withWillQos(MqttQos.atLeastOnce);kk
   print('EXAMPLE::Mosquitto client connecting....');
   client.connectionMessage = connMess;*/
 
@@ -73,18 +72,6 @@ class MqttController {
   /// The subscribed callback
   void onSubscribed(String topic) {
     print('Subscription confirmed for topic $topic');
-  }
-
-  /// The pre auto re connect callback
-  void onAutoReconnect() {
-    print(
-        'onAutoReconnect client callback - Client auto reconnection sequence will start');
-  }
-
-  /// The post auto re connect callback
-  void onAutoReconnected() {
-    print(
-        'onAutoReconnected client callback - Client auto reconnection sequence has completed');
   }
 
   /// The successful connect callback
