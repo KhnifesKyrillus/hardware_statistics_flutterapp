@@ -1,6 +1,6 @@
 class Computer {
   String _name;
-  double _cpuUsage, _cpuTemp, _gpuUsage, _gpuTemp, _ramUsage = 0;
+  double _cpuUsage, _cpuTemp, _gpuUsage, _gpuTemp, _ramUsage;
 
   Computer(
       this._name, this._cpuUsage, this._cpuTemp, this._gpuUsage, this._gpuTemp);
