@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:hardware_statistics_flutterapp/add_computer_button.dart';
+import 'package:hardware_statistics_flutterapp/device_controller.dart';
 import 'package:hardware_statistics_flutterapp/mqtt_controller.dart';
+import 'package:provider/provider.dart';
+
+import 'computer_card.dart';
+import 'constants.dart';
 
 void main() async {
   MqttController mqttController = new MqttController();
-  mqttController.initializeMqttClient();
-  runApp(MyApp());
+  await mqttController.initializeMqttClient();
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => controller,
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -28,39 +39,31 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+        appBar: AppBar(
+          title: Text(widget.title),
+          actions: <Widget>[
+            Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {});
+                  },
+                  child: Icon(
+                    Icons.refresh,
+                    size: 26.0,
+                  ),
+                )),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
-    );
+        body: ListView.builder(
+            itemBuilder: (context, index) => ComputerCard(
+                  c: Provider.of<DeviceController>(context).computers[index],
+                ),
+            itemCount: Provider.of<DeviceController>(context).computers.length),
+        floatingActionButton: AddComputerButton());
   }
 }
